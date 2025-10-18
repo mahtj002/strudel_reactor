@@ -99,42 +99,52 @@ export default function StrudelDemo() {
 
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-              <label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label>
-              <textarea className="form-control" rows="15" id="proc" ></textarea>
-            </div>
-            <div className="col-md-4">
+            <div className="col-md-6">
+              <div className="row-md-6" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                <label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label>
+                <textarea className="form-control" rows="15" id="proc" ></textarea>
+              </div>
 
-              <nav>
-                <button id="process" className="btn btn-outline-primary">Preprocess</button>
-                <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
-                <br />
-                <button id="play" className="btn btn-outline-primary">Play</button>
-                <button id="stop" className="btn btn-outline-primary">Stop</button>
-              </nav>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-              <div id="editor" />
-            </div>
-            <div className="col-md-4">
-              <div className="form-check">
-                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
-                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                  p1: ON
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
-                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                  p1: HUSH
-                </label>
+              {/* Editor */}
+              <div className="row">
+                <div className="row-md-6" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                  <div id="editor" />
+                </div>
               </div>
             </div>
-          </div>
+
+
+            {/* Buttons */}
+            <div className="col-md-6">
+              <div className="p-3 bg-light border border-dark rounded h-100 d-flex flex-column">
+
+                <div className="row">
+                  <nav>
+                    <button id="process" className="btn btn-outline-primary">Preprocess</button>
+                    <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
+                    <button id="play" className="btn btn-outline-primary">Play</button>
+                    <button id="stop" className="btn btn-outline-primary">Stop</button>
+                  </nav>
+                </div>
+
+                {/* Keypad for specific items */}
+                  <div className="form-check">
+                    <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
+                    <label className="form-check-label" htmlFor="flexRadioDefault1">
+                      p1: ON
+                    </label>
+                  </div>
+
+                    <div className="form-check">
+                      <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
+                      <label className="form-check-label" htmlFor="flexRadioDefault2">
+                        p1: HUSH
+                      </label>
+                    </div>
+                </div>
+              </div>
+            </div>
         </div>
-
       </main >
     </div >
   );
