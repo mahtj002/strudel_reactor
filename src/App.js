@@ -91,7 +91,6 @@ export default function StrudelDemo() {
 
   }, []);
 
-
   return (
     <div>
       <h2>Strudel Demo</h2>
@@ -127,7 +126,76 @@ export default function StrudelDemo() {
                   </nav>
                 </div>
 
+                <div className="row">
+                  <nav>
+                    <button id="process" className="btn btn-outline-secondary">Save</button>
+                    <button id="process_play" className="btn btn-outline-secondary">Load</button>
+                  </nav>
+                </div>
+
                 {/* Keypad for specific items */}
+
+                <div className="container text-center">
+                  <div className="row row-cols-4">
+                    <div className="col">
+                      <button className="pad-btn" style={{ backgroundColor: "#FFCC80" }}></button>
+                    </div>
+                    <div className="col">
+                      <button className="pad-btn" style={{ backgroundColor: "#FFCC80" }}></button>
+                    </div>
+                    <div className="col">
+                      <button className="pad-btn" style={{ backgroundColor: "#FFCC80" }}></button>
+                    </div>
+
+                    <div className="col-1 d-flex justify-content-center align-items-center">
+                      <label><input type="checkbox"></input></label>
+                    </div>
+
+                    <div className="col">
+                      <button className="pad-btn" style={{ backgroundColor: "#FFCC80" }}></button>
+                    </div>
+                    <div className="col">
+                      <button className="pad-btn" style={{ backgroundColor: "#FFCC80" }}></button>
+                    </div>
+                    <div className="col">
+                      <button className="pad-btn" style={{ backgroundColor: "#FFCC80" }}></button>
+                    </div>
+
+                    <div className="col-1 d-flex justify-content-center align-items-center">
+                      <label><input type="checkbox"></input></label>
+                    </div>
+
+                    <div className="col">
+                      <button className="pad-btn" style={{ backgroundColor: "#FFCC80" }}></button>
+                    </div>
+                    <div className="col">
+                      <button className="pad-btn" style={{ backgroundColor: "#FFCC80" }}></button>
+                    </div>
+                    <div className="col">
+                      <button className="pad-btn" style={{ backgroundColor: "#FFCC80" }}></button>
+                    </div>
+
+                    <div className="col-1 d-flex justify-content-center align-items-center">
+                      <label><input type="checkbox"></input></label>
+                    </div>
+
+
+                    <div className="col d-flex justify-content-center align-items-center">
+                      <button className="mute-btn" style={{ backgroundColor: "#FFCC80" }}>🔇</button>
+                    </div>
+
+                    <div className="col d-flex justify-content-center align-items-center">
+                      <span>🔈</span>
+                      <input type="range" min="0" max="100" defaultValue="50" />
+                      <span>🔊</span>
+                    </div>
+
+                    <div className="col d-flex justify-content-center align-items-center">
+                      <input type="number" placeholder="BPM" style={{ width: '60px', textAlign: 'center' }}></input>
+                    </div>
+                  </div>
+                </div>
+
                   <div className="form-check">
                     <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
                     <label className="form-check-label" htmlFor="flexRadioDefault1">
@@ -140,7 +208,8 @@ export default function StrudelDemo() {
                       <label className="form-check-label" htmlFor="flexRadioDefault2">
                         p1: HUSH
                       </label>
-                    </div>
+                    </div> 
+
                 </div>
               </div>
             </div>
