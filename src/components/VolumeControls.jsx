@@ -1,11 +1,11 @@
-function VolumeControls({handleMuteClick, isMuted}){
+function VolumeControls(props){
     return(
 
         <>
             <div className="col d-flex justify-content-center align-items-center mt-2">
                 <button className="mute-btn" 
                     style={{ backgroundColor: "#c8c5c0ff" }}
-                    onClick={handleMuteClick}>{isMuted ? "🔇" : "🔊" }</button>
+                    onClick={props.handleMuteClick}>{props.isMuted ? "🔇" : "🔊" }</button>
             </div>
 
             <div className="col d-flex justify-content-center align-items-center">
