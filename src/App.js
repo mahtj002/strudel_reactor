@@ -18,6 +18,7 @@ import SaveAndLoadButtons from './components/SaveAndLoadButtons';
 import ProcButtons from './components/ProcButtons';
 
 let globalEditor = null;
+let globalPadsOff = Array(9).fill(false);
 
 const handleD3Data = (event) => {
     console.log(event.detail);
@@ -51,21 +52,24 @@ export function ProcAndPlay() {
 }
 
 export function Proc() {
+  let proc_text = document.getElementById('proc').value 
+  let proc_text_replaced = proc_text
+    .replaceAll('<bassline>', () => ProcessText(0))
+    .replaceAll('<main_arp>', () => ProcessText(1))
+    .replaceAll('<drums>', () => ProcessText(2))
+    .replaceAll('<drum_set_2>', () => ProcessText(3));
+    
+    globalEditor.setCode(proc_text_replaced) 
+} 
+  
+export function ProcessText(index) { 
+  let replace = "" 
 
-    let proc_text = document.getElementById('proc').value
-    let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-    ProcessText(proc_text);
-    globalEditor.setCode(proc_text_replaced)
-}
-
-export function ProcessText(match, ...args) {
-
-    let replace = ""
-    if (document.getElementById('flexRadioDefault2').checked) {
-        replace = "_"
-    }
-
-    return replace
+  if (globalPadsOff[index]) {
+    replace = "_";
+  }
+    
+  return replace
 }
 
 export default function StrudelDemo() {
@@ -90,6 +94,10 @@ export default function StrudelDemo() {
   const handleMuteClick = () => {
     setIsMuted(!isMuted);
   };
+
+  useEffect(() => {
+    globalPadsOff = padsOff;
+  }, [padsOff]);
 
 useEffect(() => {
 
@@ -138,10 +146,11 @@ useEffect(() => {
 
         <div className="container-fluid">
           <div className="row">
+
             <div className="col-md-6">
               <div className="row-md-6" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
                 <label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label>
-                <textarea className="form-control" rows="15" id="proc" ></textarea>
+                 <textarea className="form-control" rows="15" id="proc" ></textarea>
               </div>
 
               {/* Editor */}
@@ -155,6 +164,7 @@ useEffect(() => {
 
             {/* Buttons */}
             <div className="col-md-6 d-flex justify-content-center align-items-center" >
+              
               <div className="p-3 bg-light border border-dark rounded d-flex flex-column align-items-center" 
               style={{ width: '80%', minHeight: '70vh'}}>
 
@@ -175,6 +185,7 @@ useEffect(() => {
                       setToggle2={setToggle2}
                       toggle3={toggle3}
                       setToggle3={setToggle3}
+                      ProcAndPlay={ProcAndPlay}
                       />
 
                     <VolumeControls 
@@ -187,7 +198,7 @@ useEffect(() => {
                   </div>
                 </div>
 
-                <DJControls />
+                {/* <DJControls /> */}
 
                 </div>
               </div>

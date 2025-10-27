@@ -3,7 +3,8 @@ function RadioButtons(props) {
         <>
             <div className="col">
                 <button className={`pad-btn ${props.padsOff[0] ? 'off' : ''}`} 
-                    onClick={() => props.togglePad(0)}
+                    onClick={() => 
+                        props.togglePad(0)}
                     style={{ backgroundColor: "#FFCC80" }}></button>
             </div>
 
@@ -42,7 +43,7 @@ function RadioButtons(props) {
             <div className="col mt-2">
                 <button className={`pad-btn ${props.padsOff[5] ? 'off' : ''}`} 
                     onClick={() => props.togglePad(5)} 
-                      style={{ backgroundColor: "#E18FFF" }}></button>
+                    style={{ backgroundColor: "#E18FFF" }}></button>
             </div>
 
             <div className="col-2 d-flex justify-content-center align-items-center">
