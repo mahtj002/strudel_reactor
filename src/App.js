@@ -104,6 +104,17 @@ export default function StrudelDemo() {
       globalEditor.setCode(proc_text_replaced) 
   }
 
+  const [volume, setVolume] = useState(1);
+
+  const handleVolumeChange = (newVolume) => {
+    let proc_text = songText;
+
+    let proc_text_replaced = proc_text
+    .replaceAll('.gain(1)', `.gain(${newVolume})`) // gain adjusts the volume
+
+    globalEditor.setCode(proc_text_replaced)
+  }
+
   const handleProcAndPlay = () => {
     console.log(globalEditor)
     handleProcess()
@@ -234,6 +245,9 @@ useEffect(() => {
                       isMuted={isMuted} 
                       // muteClick={handleMuteClick} 
                       muteAll={handleMuteAll}
+                      volume={volume}
+                      volumeChange={handleVolumeChange}
+                      setVolume={setVolume}
                       />
 
                     <BPMControl/>

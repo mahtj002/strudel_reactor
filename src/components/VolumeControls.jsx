@@ -11,7 +11,12 @@ function VolumeControls(props){
 
             <div className="col d-flex justify-content-center align-items-center">
                 <span>🔈</span>
-                <input type="range" min="0" max="100" defaultValue="50" />
+                <input type="range" min="0" max="1" step="0.01" defaultValue="1" value={props.volume}
+                    onChange={(e) => {
+                        const newVol = e.target.value;
+                        props.setVolume(newVol);
+                        props.volumeChange(newVol);
+                    }}/>
                 <span>🔊</span>
             </div>
         </>
