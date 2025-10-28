@@ -14,7 +14,7 @@ import VolumeControls from './components/VolumeControls';
 import BPMControl from './components/BPMControl';
 import SaveAndLoadButtons from './components/SaveAndLoadButtons';
 import ProcButtons from './components/ProcButtons';
-import PreprocessTextArea from './components/ProprocessTextArea';
+import PreprocessTextArea from './components/PreprocessTextArea';
 
 let globalEditor = null;
 let globalPadsOff = Array(9).fill(false);
@@ -39,8 +39,6 @@ const handleD3Data = (event) => {
 //     }
 //     )
 // }
-
-
 
 // export function ProcAndPlay() {
 //     if (globalEditor != null && globalEditor.repl.state.started == true) {
@@ -71,6 +69,17 @@ const handleD3Data = (event) => {
 //   return replace
 // }
 
+export function ProcessText(index) {
+  const instruments = ['bassline', 'main_arp', 'drums', 'drum_set_2'];
+  const name = instruments[index];
+  
+  if (globalPadsOff[index]) {
+    return `_${name}`;
+  } else {
+    return name;
+  }
+}
+
 export default function StrudelDemo() {
 
   const hasRun = useRef(false);
@@ -82,6 +91,24 @@ export default function StrudelDemo() {
   const handleStop = () => {
     globalEditor.stop()
   }
+
+  const handleProcess = () => {
+    let proc_text = songText;
+
+    let proc_text_replaced = proc_text
+      .replaceAll('bassline', () => ProcessText(0))
+      .replaceAll('main_arp', () => ProcessText(1))
+      .replaceAll('drums', () => ProcessText(2))
+      .replaceAll('drum_set_2', () => ProcessText(3));
+
+      globalEditor.setCode(proc_text_replaced) 
+  }
+
+  const handleProcAndPlay = () => {
+    console.log(globalEditor)
+    handleProcess()
+    globalEditor.evaluate();
+}
 
   const [songText, setSongText] = useState(stranger_tune)
 
@@ -176,7 +203,7 @@ useEffect(() => {
               <div className="p-3 bg-light border border-dark rounded d-flex flex-column align-items-center" 
               style={{ width: '80%', minHeight: '70vh'}}>
 
-                <ProcButtons onPlay={handlePlay} onStop={handleStop}/>
+                <ProcButtons onPlay={handlePlay} onStop={handleStop} onProcAndPlay={handleProcAndPlay} onProcess={handleProcess}/>
 
                 <SaveAndLoadButtons/>
 
