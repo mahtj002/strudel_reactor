@@ -5,7 +5,8 @@ function VolumeControls(props){
             <div className="col d-flex justify-content-center align-items-center mt-2">
                 <button className="mute-btn" 
                     style={{ backgroundColor: "#c8c5c0ff" }}
-                    onClick={props.handleMuteClick}>{props.isMuted ? "🔇" : "🔊" }</button>
+                    onClick={props.muteAll}>{props.isMuted ? "🔇" : "🔊" }
+                </button>
             </div>
 
             <div className="col d-flex justify-content-center align-items-center">

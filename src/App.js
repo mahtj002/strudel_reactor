@@ -108,7 +108,7 @@ export default function StrudelDemo() {
     console.log(globalEditor)
     handleProcess()
     globalEditor.evaluate();
-}
+  }
 
   const [songText, setSongText] = useState(stranger_tune)
 
@@ -128,8 +128,15 @@ export default function StrudelDemo() {
 
   const [isMuted, setIsMuted] = useState(false);
 
-  const handleMuteClick = () => {
-    setIsMuted(!isMuted);
+  // const handleMuteClick = () => {
+  //   setIsMuted(!isMuted);
+  // };
+
+  const handleMuteAll = () => {
+    const newMuteState = !isMuted;
+    setIsMuted(newMuteState);
+    setPadsOff(Array(padsOff.length).fill(newMuteState)); // Mutes/Unmutes all buttons
+    handleProcess();
   };
 
   useEffect(() => {
@@ -225,7 +232,8 @@ useEffect(() => {
 
                     <VolumeControls 
                       isMuted={isMuted} 
-                      handleMuteClick={handleMuteClick} 
+                      // muteClick={handleMuteClick} 
+                      muteAll={handleMuteAll}
                       />
 
                     <BPMControl/>
