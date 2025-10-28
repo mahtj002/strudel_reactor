@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
@@ -8,14 +8,13 @@ import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
-import { useState } from 'react';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
-import DJControls  from './components/DJControls';
 import RadioButtons from './components/RadioButtons';
 import VolumeControls from './components/VolumeControls';
 import BPMControl from './components/BPMControl';
 import SaveAndLoadButtons from './components/SaveAndLoadButtons';
 import ProcButtons from './components/ProcButtons';
+import PreprocessTextArea from './components/ProprocessTextArea';
 
 let globalEditor = null;
 let globalPadsOff = Array(9).fill(false);
@@ -24,57 +23,68 @@ const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
-export function SetupButtons() {
+// export function SetupButtons() {
 
-    document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-    document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
-    document.getElementById('process').addEventListener('click', () => {
-        Proc()
-    }
-    )
-    document.getElementById('process_play').addEventListener('click', () => {
-        if (globalEditor != null) {
-            Proc()
-            globalEditor.evaluate()
-        }
-    }
-    )
-}
+//     document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
+//     document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
+//     document.getElementById('process').addEventListener('click', () => {
+//         Proc()
+//     }
+//     )
+//     document.getElementById('process_play').addEventListener('click', () => {
+//         if (globalEditor != null) {
+//             Proc()
+//             globalEditor.evaluate()
+//         }
+//     }
+//     )
+// }
 
 
 
-export function ProcAndPlay() {
-    if (globalEditor != null && globalEditor.repl.state.started == true) {
-        console.log(globalEditor)
-        Proc()
-        globalEditor.evaluate();
-    }
-}
+// export function ProcAndPlay() {
+//     if (globalEditor != null && globalEditor.repl.state.started == true) {
+//         console.log(globalEditor)
+//         Proc()
+//         globalEditor.evaluate();
+//     }
+// }
 
-export function Proc() {
-  let proc_text = document.getElementById('proc').value 
-  let proc_text_replaced = proc_text
-    .replaceAll('<bassline>', () => ProcessText(0))
-    .replaceAll('<main_arp>', () => ProcessText(1))
-    .replaceAll('<drums>', () => ProcessText(2))
-    .replaceAll('<drum_set_2>', () => ProcessText(3));
+// export function Proc() {
+//   let proc_text = document.getElementById('proc').value 
+//   let proc_text_replaced = proc_text
+//     .replaceAll('<bassline>', () => ProcessText(0))
+//     .replaceAll('<main_arp>', () => ProcessText(1))
+//     .replaceAll('<drums>', () => ProcessText(2))
+//     .replaceAll('<drum_set_2>', () => ProcessText(3));
     
-    globalEditor.setCode(proc_text_replaced) 
-} 
+//     globalEditor.setCode(proc_text_replaced) 
+// } 
   
-export function ProcessText(index) { 
-  let replace = "" 
+// export function ProcessText(index) { 
+//   let replace = "" 
 
-  if (globalPadsOff[index]) {
-    replace = "_";
-  }
+//   if (globalPadsOff[index]) {
+//     replace = "_";
+//   }
     
-  return replace
-}
+//   return replace
+// }
 
 export default function StrudelDemo() {
 
   const hasRun = useRef(false);
+
+  const handlePlay = () => {
+    globalEditor.evaluate()
+  }
+
+  const handleStop = () => {
+    globalEditor.stop()
+  }
+
+  const [songText, setSongText] = useState(stranger_tune)
+
   const [toggle1, setToggle1] = useState(false);
   const [toggle2, setToggle2] = useState(false);
   const [toggle3, setToggle3] = useState(false);
@@ -86,8 +96,8 @@ export default function StrudelDemo() {
     const newState = [...prev];
     newState[index] = !newState[index];
     return newState;
-  });
-};
+    });
+  };
 
   const [isMuted, setIsMuted] = useState(false);
 
@@ -133,11 +143,11 @@ useEffect(() => {
             });
             
         document.getElementById('proc').value = stranger_tune
-        SetupButtons()
-        Proc()
-    }
-
-}, []);
+        // SetupButtons()
+        // Proc()
+    } 
+    globalEditor.setCode(songText);
+}, [songText]);
 
   return (
     <div style={{ backgroundColor: '#c4c4c4ff', minHeight: '100vh' }}>
@@ -148,10 +158,8 @@ useEffect(() => {
           <div className="row">
 
             <div className="col-md-6">
-              <div className="row-md-6" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                <label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label>
-                 <textarea className="form-control" rows="15" id="proc" ></textarea>
-              </div>
+              
+              <PreprocessTextArea defaultValue={songText} onChange={(e) => setSongText(e.target.value)}/>
 
               {/* Editor */}
               <div className="row">
@@ -168,7 +176,7 @@ useEffect(() => {
               <div className="p-3 bg-light border border-dark rounded d-flex flex-column align-items-center" 
               style={{ width: '80%', minHeight: '70vh'}}>
 
-                <ProcButtons/>
+                <ProcButtons onPlay={handlePlay} onStop={handleStop}/>
 
                 <SaveAndLoadButtons/>
 
@@ -185,7 +193,7 @@ useEffect(() => {
                       setToggle2={setToggle2}
                       toggle3={toggle3}
                       setToggle3={setToggle3}
-                      ProcAndPlay={ProcAndPlay}
+                      // ProcAndPlay={ProcAndPlay}
                       />
 
                     <VolumeControls 
@@ -197,9 +205,6 @@ useEffect(() => {
 
                   </div>
                 </div>
-
-                {/* <DJControls /> */}
-
                 </div>
               </div>
             </div>
