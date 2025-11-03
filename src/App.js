@@ -47,6 +47,7 @@ export default function StrudelDemo() {
 
   const [padsOff, setPadsOff] = useState(Array(9).fill(false));
   const [volume, setVolume] = useState(1);
+  const [bpm, setBPM] = useState(0.5);
   const [isMuted, setIsMuted] = useState(false);
 
   // Runs the strudel code to play music
@@ -79,6 +80,15 @@ export default function StrudelDemo() {
 
     let proc_text_replaced = proc_text
       .replaceAll('.gain(1)', `.gain(${newVolume})`) // Gain adjusts the volume
+
+    globalEditor.setCode(proc_text_replaced)
+  }
+
+  // Adjusts 'cps' in Strudel which changes BPS
+  const handleBPMChange = (newBPM) => {
+    let proc_text = songText;
+    let proc_text_replaced = proc_text
+      .replaceAll('.cps(0.5)', `.cps(${newBPM})`) // CPS adjusts the bps
 
     globalEditor.setCode(proc_text_replaced)
   }
@@ -201,7 +211,10 @@ useEffect(() => {
                       setVolume={setVolume}
                       />
 
-                    <BPMControl/>
+                    <BPMControl
+                    bpm={bpm}
+                    setBPM={setBPM}
+                    bpmChange={handleBPMChange}/>
 
                   </div>
                 </div>

@@ -58,6 +58,7 @@ note(pick(arpeggiator1, "<0 1 2 3>/2"))
 .room(0.6)
 .lpenv(3.3)
 .gain(1)
+.cps(0.5)
 .postgain(pick(gain_patterns, pattern))
 
 
