@@ -17,58 +17,13 @@ import ProcButtons from './components/ProcButtons';
 import PreprocessTextArea from './components/PreprocessTextArea';
 
 let globalEditor = null;
-let globalPadsOff = Array(9).fill(false);
+let globalPadsOff = Array(9).fill(false); // Tracks which pads are on/off
 
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
-// export function SetupButtons() {
-
-//     document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-//     document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
-//     document.getElementById('process').addEventListener('click', () => {
-//         Proc()
-//     }
-//     )
-//     document.getElementById('process_play').addEventListener('click', () => {
-//         if (globalEditor != null) {
-//             Proc()
-//             globalEditor.evaluate()
-//         }
-//     }
-//     )
-// }
-
-// export function ProcAndPlay() {
-//     if (globalEditor != null && globalEditor.repl.state.started == true) {
-//         console.log(globalEditor)
-//         Proc()
-//         globalEditor.evaluate();
-//     }
-// }
-
-// export function Proc() {
-//   let proc_text = document.getElementById('proc').value 
-//   let proc_text_replaced = proc_text
-//     .replaceAll('<bassline>', () => ProcessText(0))
-//     .replaceAll('<main_arp>', () => ProcessText(1))
-//     .replaceAll('<drums>', () => ProcessText(2))
-//     .replaceAll('<drum_set_2>', () => ProcessText(3));
-    
-//     globalEditor.setCode(proc_text_replaced) 
-// } 
-  
-// export function ProcessText(index) { 
-//   let replace = "" 
-
-//   if (globalPadsOff[index]) {
-//     replace = "_";
-//   }
-    
-//   return replace
-// }
-
+// Prefixes instrument with an underscore to mute it 
 export function ProcessText(index) {
   const instruments = ['bassline', 'main_arp', 'drums', 'drum_set_2'];
   const name = instruments[index];
@@ -83,34 +38,47 @@ export function ProcessText(index) {
 export default function StrudelDemo() {
 
   const hasRun = useRef(false);
+  const [songText, setSongText] = useState(stranger_tune)
 
+  // Slider buttons
+  const [toggle1, setToggle1] = useState(false);
+  const [toggle2, setToggle2] = useState(false);
+  const [toggle3, setToggle3] = useState(false);
+
+  const [padsOff, setPadsOff] = useState(Array(9).fill(false));
+  const [volume, setVolume] = useState(1);
+  const [isMuted, setIsMuted] = useState(false);
+
+  // Runs the strudel code to play music
   const handlePlay = () => {
     globalEditor.evaluate()
   }
 
+  // Stops all Strudel sounds
   const handleStop = () => {
     globalEditor.stop()
   }
 
+  // Updates the editor content before running
   const handleProcess = () => {
     let proc_text = songText;
 
+    // Replaces instruments with underscore prefix based on mute state
     let proc_text_replaced = proc_text
       .replaceAll('bassline', () => ProcessText(0))
       .replaceAll('main_arp', () => ProcessText(1))
       .replaceAll('drums', () => ProcessText(2))
       .replaceAll('drum_set_2', () => ProcessText(3));
 
-      globalEditor.setCode(proc_text_replaced) 
+    globalEditor.setCode(proc_text_replaced) 
   }
 
-  const [volume, setVolume] = useState(1);
-
+  // Adjusts '.gain' in the Strudel to allow user to change the volume
   const handleVolumeChange = (newVolume) => {
     let proc_text = songText;
 
     let proc_text_replaced = proc_text
-    .replaceAll('.gain(1)', `.gain(${newVolume})`) // gain adjusts the volume
+      .replaceAll('.gain(1)', `.gain(${newVolume})`) // Gain adjusts the volume
 
     globalEditor.setCode(proc_text_replaced)
   }
@@ -121,14 +89,7 @@ export default function StrudelDemo() {
     globalEditor.evaluate();
   }
 
-  const [songText, setSongText] = useState(stranger_tune)
-
-  const [toggle1, setToggle1] = useState(false);
-  const [toggle2, setToggle2] = useState(false);
-  const [toggle3, setToggle3] = useState(false);
-
-  const [padsOff, setPadsOff] = useState(Array(9).fill(false));
-
+  // Toggles individual pad button state
   const togglePad = (index) => {
     setPadsOff(prev => {
     const newState = [...prev];
@@ -137,16 +98,11 @@ export default function StrudelDemo() {
     });
   };
 
-  const [isMuted, setIsMuted] = useState(false);
-
-  // const handleMuteClick = () => {
-  //   setIsMuted(!isMuted);
-  // };
-
+  // Mutes/Unmutes all buttons
   const handleMuteAll = () => {
     const newMuteState = !isMuted;
     setIsMuted(newMuteState);
-    setPadsOff(Array(padsOff.length).fill(newMuteState)); // Mutes/Unmutes all buttons
+    setPadsOff(Array(padsOff.length).fill(newMuteState));
     handleProcess();
   };
 
@@ -201,7 +157,6 @@ useEffect(() => {
 
         <div className="container-fluid">
           <div className="row">
-
             <div className="col-md-6">
               
               <PreprocessTextArea defaultValue={songText} onChange={(e) => setSongText(e.target.value)}/>
@@ -214,7 +169,6 @@ useEffect(() => {
               </div>
             </div>
 
-
             {/* Buttons */}
             <div className="col-md-6 d-flex justify-content-center align-items-center" >
               
@@ -222,7 +176,6 @@ useEffect(() => {
               style={{ width: '80%', minHeight: '70vh'}}>
 
                 <ProcButtons onPlay={handlePlay} onStop={handleStop} onProcAndPlay={handleProcAndPlay} onProcess={handleProcess}/>
-
                 <SaveAndLoadButtons/>
 
                 {/* Keypad for specific items */}
@@ -238,12 +191,10 @@ useEffect(() => {
                       setToggle2={setToggle2}
                       toggle3={toggle3}
                       setToggle3={setToggle3}
-                      // ProcAndPlay={ProcAndPlay}
                       />
 
                     <VolumeControls 
                       isMuted={isMuted} 
-                      // muteClick={handleMuteClick} 
                       muteAll={handleMuteAll}
                       volume={volume}
                       volumeChange={handleVolumeChange}
@@ -262,6 +213,5 @@ useEffect(() => {
       </main >
     </div >
 );
-
 
 }
