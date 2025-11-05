@@ -47,6 +47,7 @@ note(pick(basslines, bass))
 .lpf(700)
 .room(0.4)
 .gain(1)
+.stretch(0)
 .postgain(pick(gain_patterns, pattern))
 
 
@@ -59,6 +60,7 @@ note(pick(arpeggiator1, "<0 1 2 3>/2"))
 .lpenv(3.3)
 .gain(1)
 .cps(0.5)
+.stretch(0)
 .postgain(pick(gain_patterns, pattern))
 
 
@@ -69,6 +71,7 @@ stack(
   .pcurve(2)
   .pdec(1)
   .gain(1)
+  .stretch(0)
   .struct(pick(drum_structure, pattern)),
 
   s("sh").struct("[x!3 ~!2 x!10 ~]")
@@ -79,6 +82,7 @@ stack(
   s("{~ ~ rim ~ cp ~ rim cp ~!2 rim ~ cp ~ < rim ~ >!2}%8 *2")
   .bank("[KorgDDM110, OberheimDmx]").speed(1.2)
   .gain(1)
+  .stretch(0)
   .postgain(.25),
 )
 
@@ -87,12 +91,14 @@ stack(
   s("[~ hh]*4").bank("RolandTR808").room(0.3).speed(0.75).gain(1),
   s("hh").struct("x*16").bank("RolandTR808")
   .gain(1)
+  .stretch(0)
   .jux(rev)
   .room(sine.range(0.1,0.4))
   .postgain(0.5),
   
   s("[psr:[2|5|6|7|8|9|12|24|25]*16]?0.1")
   .gain(1)
+  .stretch(0)
   .postgain(pick(gain_patterns, pattern))
   .hpf(1000)
   .speed(0.5)

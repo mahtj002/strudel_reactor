@@ -41,7 +41,7 @@ export default function StrudelDemo() {
   const [songText, setSongText] = useState(stranger_tune)
 
   // Slider buttons
-  const [toggle1, setToggle1] = useState(false);
+  const [stretch, setStretch] = useState(false);
   const [toggle2, setToggle2] = useState(false);
   const [toggle3, setToggle3] = useState(false);
 
@@ -98,6 +98,20 @@ export default function StrudelDemo() {
     handleProcess()
     globalEditor.evaluate();
   }
+
+  // Toggles the stretch effect off/on
+  const toggleStretchEffect = (isOn) => {
+    let proc_text = songText;
+    let proc_text_replaced = proc_text;
+
+    if (isOn) {
+      proc_text_replaced = proc_text_replaced.replaceAll('.stretch(0)', '.stretch(10)');
+    } else {
+      proc_text_replaced = proc_text_replaced.replaceAll('.stretch(10)', '.stretch(0)');
+    }
+
+    globalEditor.setCode(proc_text_replaced)
+  };
 
   // Toggles individual pad button state
   const togglePad = (index) => {
@@ -195,12 +209,13 @@ useEffect(() => {
                    
                     <RadioButtons padsOff={padsOff}
                       togglePad={togglePad}
-                      toggle1={toggle1}
-                      setToggle1={setToggle1}
+                      stretch={stretch}
+                      setStretch={setStretch}
                       toggle2={toggle2}
                       setToggle2={setToggle2}
                       toggle3={toggle3}
                       setToggle3={setToggle3}
+                      toggleStretchEffect={toggleStretchEffect}
                       />
 
                     <VolumeControls 

@@ -21,11 +21,16 @@ function RadioButtons(props) {
             </div>
 
             <div className="col-2 d-flex justify-content-center align-items-center">
-                    <button className={`toggle-btn ${props.toggle1 ? "toggled" : ""}`} 
-                        style={{ backgroundColor: props.toggle1 ? '#5e43d6d7' : '#e0e0e0' }}
-                        onClick={() => props.setToggle1(!props.toggle1)}>
-                        <div className="thumb"></div>
-                    </button>
+                <button
+                    className={`toggle-btn ${props.stretch ? "toggled" : ""}`}
+                    style={{ backgroundColor: props.stretch ? '#5e43d6d7' : '#e0e0e0' }}
+                    onClick={() => {
+                    const newState = !props.stretch;
+                    props.setStretch(newState);
+                    props.toggleStretchEffect(newState);
+                    }}>
+                    <div className="thumb"></div>
+                </button>
             </div>
 
             <div className="col mt-2">
