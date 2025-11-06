@@ -48,6 +48,7 @@ note(pick(basslines, bass))
 .room(0.4)
 .gain(1)
 .stretch(0)
+//.vowel("<a e i <o u>>")
 .postgain(pick(gain_patterns, pattern))
 
 
@@ -61,6 +62,7 @@ note(pick(arpeggiator1, "<0 1 2 3>/2"))
 .gain(1)
 .cps(0.5)
 .stretch(0)
+//.vowel("<a e i <o u>>")
 .postgain(pick(gain_patterns, pattern))
 
 
@@ -72,6 +74,7 @@ stack(
   .pdec(1)
   .gain(1)
   .stretch(0)
+  //.vowel("<a e i <o u>>")
   .struct(pick(drum_structure, pattern)),
 
   s("sh").struct("[x!3 ~!2 x!10 ~]")
@@ -83,6 +86,7 @@ stack(
   .bank("[KorgDDM110, OberheimDmx]").speed(1.2)
   .gain(1)
   .stretch(0)
+  //.vowel("<a e i <o u>>")
   .postgain(.25),
 )
 
@@ -92,6 +96,7 @@ stack(
   s("hh").struct("x*16").bank("RolandTR808")
   .gain(1)
   .stretch(0)
+  //.vowel("<a e i <o u>>")
   .jux(rev)
   .room(sine.range(0.1,0.4))
   .postgain(0.5),
@@ -99,6 +104,8 @@ stack(
   s("[psr:[2|5|6|7|8|9|12|24|25]*16]?0.1")
   .gain(1)
   .stretch(0)
+  .scramble(0)
+  //.vowel("<a e i <o u>>")
   .postgain(pick(gain_patterns, pattern))
   .hpf(1000)
   .speed(0.5)

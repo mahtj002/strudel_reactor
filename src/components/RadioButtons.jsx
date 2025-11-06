@@ -52,9 +52,14 @@ function RadioButtons(props) {
             </div>
 
             <div className="col-2 d-flex justify-content-center align-items-center">
-                <button className={`toggle-btn ${props.toggle2 ? "toggled" : ""}`}
-                    style={{ backgroundColor: props.toggle2 ? '#f32525ff' : '#e0e0e0' }}
-                    onClick={() => props.setToggle2(!props.toggle2)}>
+                <button
+                    className={`toggle-btn ${props.vowel ? "toggled" : ""}`}
+                    style={{ backgroundColor: props.vowel ? '#5e43d6d7' : '#e0e0e0' }}
+                    onClick={() => {
+                    const newState = !props.vowel;
+                    props.setVowel(newState);
+                    props.toggleVowelEffect(newState);
+                    }}>
                     <div className="thumb"></div>
                 </button>
             </div>

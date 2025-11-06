@@ -42,7 +42,7 @@ export default function StrudelDemo() {
 
   // Slider buttons
   const [stretch, setStretch] = useState(false);
-  const [toggle2, setToggle2] = useState(false);
+  const [vowel, setVowel] = useState(false);
   const [toggle3, setToggle3] = useState(false);
 
   const [padsOff, setPadsOff] = useState(Array(9).fill(false));
@@ -108,6 +108,20 @@ export default function StrudelDemo() {
       proc_text_replaced = proc_text_replaced.replaceAll('.stretch(0)', '.stretch(10)');
     } else {
       proc_text_replaced = proc_text_replaced.replaceAll('.stretch(10)', '.stretch(0)');
+    }
+
+    globalEditor.setCode(proc_text_replaced)
+  };
+
+    // Toggles the vowel effect off/on
+  const toggleVowelEffect = (isOn) => {
+    let proc_text = songText;
+    let proc_text_replaced = proc_text;
+
+    if (isOn) {
+      proc_text_replaced = proc_text_replaced.replaceAll('//.vowel("<a e i <o u>>")', '.vowel("<a e i <o u>>")');
+    } else {
+      proc_text_replaced = proc_text_replaced.replaceAll('.vowel("<a e i <o u>>")', '//.vowel("<a e i <o u>>")');
     }
 
     globalEditor.setCode(proc_text_replaced)
@@ -211,11 +225,12 @@ useEffect(() => {
                       togglePad={togglePad}
                       stretch={stretch}
                       setStretch={setStretch}
-                      toggle2={toggle2}
-                      setToggle2={setToggle2}
+                      vowel={vowel}
+                      setVowel={setVowel}
                       toggle3={toggle3}
                       setToggle3={setToggle3}
                       toggleStretchEffect={toggleStretchEffect}
+                      toggleVowelEffect={toggleVowelEffect}
                       />
 
                     <VolumeControls 
