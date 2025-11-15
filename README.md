@@ -68,3 +68,27 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+### DJ Pad Buttons
+The DJ pad buttons are used to mute and unmute the different instruments in the song. These are hardcoded buttons which respond to specific instruments in the chosen song. Only the first four buttons respond to an instrument for this song, but more have been added for future songs that may have more.
+
+1.	Orange – Bassline
+2.	Red – Main Arp
+3.	Blue – Drums
+4.	Yellow – Drum set 2
+
+### Volume Slider
+The volume slider can be used to adjust the overall volume of the song. This does not update automatically and requires the user to click the Play button again for any changes to take effect.
+
+### Mute/Unmute All
+This button will toggle all the DJ Buttons either off or on depending on its current state, and its emoji will change to reflect which is currently selected. The song must be processed again in order for these changes to be made.
+
+### BPM Input
+The BPM input changes the beats per minute. This works from range 0.1 – 0.8 as going any faster can result in audio delays/unexpected behaviour. The Play button must be clicked for changes to be set.
+
+### Toggle Buttons
+The toggle buttons are used to toggle off/on different audio effects. The first one adds the Stretch effect, and the second one adds the Vowel effect.
+
+### Song Code
+All song code has been supplied from the starter code of the assignment and can be found in the tunes.js file. Minor adjustments have been made for additional instruments and audio effects.
